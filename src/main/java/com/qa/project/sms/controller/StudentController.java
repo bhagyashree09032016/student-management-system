@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.qa.project.sms.exceptions.StudentNotFoundID;
 import com.qa.project.sms.model.Student;
 import com.qa.project.sms.service.StudentService;
 
@@ -38,8 +39,8 @@ public class StudentController {
 
 		// creating a get mapping that retrieves the detail of a specific student
 		@GetMapping("/Student/{Studentid}")
-		private Optional<Student> getStudentById(@PathVariable("Studentid") Integer studentId) {
-			return StudentsService.getStudentById(studentId);
+		private Student getStudentById(@PathVariable("Studentid") Integer studentId) {
+			return StudentsService.getStudentById(studentId).orElseThrow(() -> new StudentNotFoundID());
 		}
 
 		// creating a delete mapping that deletes a specified student
